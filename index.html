@@ -37,12 +37,13 @@
   <div id="fullscreen">
     <div class="game-container">
       <canvas id="canvas" width="720" height="480"></canvas>
-      <button class="button-mute" onclick="muteGame()"><img src="./img_pollo_locco/img/lautsprecher-aus.png" alt="MUTE"></button>
+      <button class="button-mute" onclick="toggleMute()"><img src="./img_pollo_locco/img/lautsprecher-aus.png" alt="MUTE"></button>
+
       <div class="overlay" style="display: none;">
           <div class="panel-game">
             <div class="pannel-wrapper">
               <button onclick="restartGame()">RESTART</button>
-              <button onclick="muteGame()">MUTE</button>
+              <button id="muteBtn" onclick="toggleMute()">MUTE</button>
               <button onclick="goToMenu()">X</button>
             </div>
           </div>

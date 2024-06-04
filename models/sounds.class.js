@@ -94,4 +94,16 @@ class AudioManager {
     this.endboss_sound.muted = true;
     this.endboss_alert_sound.muted = true;
   }
+
+  unmuteGameSounds() {
+    this.coin_sound.muted = false;
+    this.bottle_sound.muted = false;
+    this.kill_sound.muted = false;
+    this.throwing_sound.muted = false;
+    this.walking_sound.muted = false;
+    this.jumping_sound.muted = false;
+    this.hurt_sound.muted = false;
+    this.endboss_sound.muted = false;
+    this.endboss_alert_sound.muted = false;
+  }
 }

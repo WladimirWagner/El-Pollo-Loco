@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isMuted = false;
 
 let game_sound = new Audio('audio/pollo_loco_music.mp3');
 let win_sound = new Audio('audio/win_music.mp3');
@@ -224,21 +225,39 @@ function clearAllIntervals() {
 }
 
 /**
- * Mutes the game
+ * Mutes and unmutes the game
  * 
  */
-function muteGame() {
+function toggleMute() {
   const muteButton = document.querySelector('.button-mute');
   const img = muteButton.querySelector('img');
+  const mobileMuteBtn = document.getElementById('muteBtn');
 
-  img.src = 'img_pollo_locco/img/lautsprecher.png';
-
-  game_sound.muted = true;
-  win_sound.muted = true;
-  lose_sound.muted = true;
-  world.audioManager.muteGameSounds();
-  world.character.audioManager.muteGameSounds();
-  world.endboss.audioManager.muteGameSounds();
+  if (!isMuted) {
+    img.src = './img_pollo_locco/img/lautsprecher.png';
+    mobileMuteBtn.innerHTML = 'UNMUTE';
+    game_sound.muted = true;
+    win_sound.muted = true;
+    lose_sound.muted = true;
+    world.audioManager.muteGameSounds();
+    world.character.audioManager.muteGameSounds();
+    world.level.endboss.forEach(endboss => {
+      endboss.audioManager.muteGameSounds();
+    });
+    isMuted = true;
+  } else {
+    img.src = './img_pollo_locco/img/lautsprecher-aus.png';
+    mobileMuteBtn.innerHTML = 'MUTE';
+    game_sound.muted = false;
+    win_sound.muted = false;
+    lose_sound.muted = false;
+    world.audioManager.unmuteGameSounds();
+    world.character.audioManager.unmuteGameSounds();
+    world.level.endboss.forEach(endboss => {
+      endboss.audioManager.unmuteGameSounds();
+    });
+    isMuted = false;
+  }
 }
 
 /**
@@ -251,22 +270,12 @@ function checkOrientation() {
   const overlay = document.querySelector('.overlay');
   const muteBtn = document.querySelector('.button-mute');
 
-  if (window.innerWidth < 950 && window.innerHeight < window.innerWidth) {
+  if (window.innerWidth < 1200 && window.innerHeight < window.innerWidth) {
     landscapeScreen.style.display = 'none';
     muteBtn.style.display = 'none';
     gameContainer.style.display = 'block';
     overlay.style.display = 'flex';
-  } else if (window.innerWidth < 1200 && window.innerHeight < window.innerWidth) {
-    landscapeScreen.style.display = 'none';
-    muteBtn.style.display = 'none';
-    gameContainer.style.display = 'block';
-    overlay.style.display = 'flex';
-  } else if (window.innerWidth < 1100 && window.innerHeight > window.innerWidth) {
-    landscapeScreen.style.display = 'flex';
-    muteBtn.style.display = 'none';
-    gameContainer.style.display = 'none';
-    overlay.style.display = 'none';
-  } else if (window.innerWidth < 720 && window.innerHeight > window.innerWidth) {
+  } else if (window.innerWidth < 1200 && window.innerHeight > window.innerWidth) {
     landscapeScreen.style.display = 'flex';
     muteBtn.style.display = 'none';
     gameContainer.style.display = 'none';
