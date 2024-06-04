@@ -19,10 +19,6 @@ class World {
   statusbarEndbossAdded = false;
   endbossAlert = false;
 
-  coin_sound = new Audio('audio/coin.mp3');
-  bottle_sound = new Audio('audio/bottle.mp3');
-  kill_sound = new Audio('audio/kill_enemy.mp3');
-
   /**
    * Constructs a game object, initializes canvas and keyboard, and sets up the game world.
    *
@@ -30,6 +26,7 @@ class World {
    * @param {Keyboard} keyboard - The keyboard input handler.
    */
   constructor(canvas, keyboard) {
+    this.audioManager = new AudioManager();
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
@@ -132,7 +129,7 @@ class World {
     this.level.coins.forEach((coin, index) =>{
       if(this.character.isColliding(coin)) {
         this.collectCoins(coin, index);
-        this.statusbarCoins.setPercentage(this.statusbarCoins.percentage + 10);
+        this.statusbarCoins.setPercentage(this.statusbarCoins.percentage + 12.5);
       }
     });
   }
@@ -145,7 +142,7 @@ class World {
     this.level.bottles.forEach((bottle, index) =>{
       if(this.character.isColliding(bottle)) {
         this.collectBottles(bottle, index);
-        this.statusbarBottles.setPercentage(this.statusbarBottles.percentage + 10);
+        this.statusbarBottles.setPercentage(this.statusbarBottles.percentage + 14.3);
       }
     });
   }
@@ -158,6 +155,7 @@ class World {
     const now = Date.now();
     if (this.keyboard.THROW && this.bottles.length > 0 && now - this.lastThrowTime >= 800) {
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+      this.audioManager.playThrowingSound();
       this.throwableObjects.push(bottle);
       this.bottles.pop();
       this.statusbarBottles.setPercentage(this.statusbarBottles.percentage - 10);
@@ -179,7 +177,7 @@ class World {
   checkBottleCollisionWithEnemies(bottle, bottleIndex) {
     this.level.enemies.forEach((enemy, enemyIndex) => {
       if (bottle.isColliding(enemy)) {
-        this.kill_sound.play();
+        this.audioManager.playKillSound();
         enemy.killTheEnemy();
         this.deleteEnemy(enemyIndex);
         this.deleteBottle(bottleIndex);
@@ -205,8 +203,8 @@ class World {
   jumpOnEnemy() {
     this.level.enemies.forEach((enemy, index) =>{
       if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
-        this.kill_sound.play();
-        this.character.jump();
+        this.audioManager.playKillSound();
+        this.character.jumpOfChicken();
         enemy.killTheEnemy();
         this.deleteEnemy(index);
       }
@@ -232,12 +230,9 @@ class World {
     if(movableObject.otherDirection) {
       this.flipImage(movableObject);
     }
-   
     movableObject.draw(this.ctx);
-
     //movableObject.drawFrame(this.ctx);
    // movableObject.drawRedFrame(this.ctx);
-
     if(movableObject.otherDirection) {
       this.flipImageBack(movableObject);
     }
@@ -264,7 +259,7 @@ class World {
    * 
    */
   collectCoins(coin, index) {
-    this.coin_sound.play();
+    this.audioManager.playCoinSound();
     this.coins.push(coin);
     this.level.coins.splice(index, 1);
   }
@@ -274,7 +269,7 @@ class World {
    * 
    */
   collectBottles(bottle, index) {
-    this.bottle_sound.play();
+    this.audioManager.playBottleSound();
     this.bottles.push(bottle);
     this.level.bottles.splice(index, 1);
   }

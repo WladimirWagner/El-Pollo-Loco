@@ -2,8 +2,6 @@ class Endboss extends MovableObject {
   y = 40;
   width = 300;
   height = 400;
-  endboss_sound = new Audio('audio/chicken_boss.mp3');
-  endboss_alert_sound = new Audio('audio/endboss_alert.mp3');
 
   IMAGES_WALKING = [
     'img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -52,13 +50,14 @@ class Endboss extends MovableObject {
 
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
+    this.audioManager = new AudioManager();
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_ALERT);
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
     this.x = 2600;
-    this.speed = 0.2;
+    this.speed = 0.4;
     this.animate();
   }
 
@@ -93,7 +92,7 @@ class Endboss extends MovableObject {
    * 
    */
   endbossMoving() {
-    this.endboss_alert_sound.pause();
+    this.audioManager.stopEndbossAlertSound();
     this.moveLeft();
     this.playAnimation(this.IMAGES_WALKING);
   }
@@ -104,7 +103,7 @@ class Endboss extends MovableObject {
    */
   endbossIsAlert() {
     if (world.endbossAlert === true) {
-      this.endboss_alert_sound.play();
+      this.audioManager.playEndbossAlertSound();
       this.speed = 0;
       this.playAnimation(this.IMAGES_ALERT);
     }
@@ -115,9 +114,9 @@ class Endboss extends MovableObject {
    * 
    */
   endbossIsHurt() {
-    this.endboss_alert_sound.pause();
-    this.endboss_sound.play();
-    this.speed = 15;
+    this.audioManager.stopEndbossAlertSound();
+    this.audioManager.playEndbossSound();
+    this.speed = 5;
     this.moveLeft();
     this.playAnimation(this.IMAGES_HURT);
   }
@@ -127,8 +126,8 @@ class Endboss extends MovableObject {
    * 
    */
   endbossAttacks() {
-    this.endboss_alert_sound.pause();
-    this.speed = 25;
+    this.audioManager.stopEndbossAlertSound();
+    this.speed = 10;
     this.moveLeft();
     this.playAnimation(this.IMAGES_ATTACK);
   }
@@ -138,8 +137,8 @@ class Endboss extends MovableObject {
    * 
    */
   endbossDied() {
-    this.endboss_alert_sound.pause();
-    this.endboss_sound.pause();
+    this.audioManager.stopEndbossAlertSound();
+    this.audioManager.stopEndbossSound();
     this.speed = 0;
     this.playAnimation(this.IMAGES_DEAD);
   }

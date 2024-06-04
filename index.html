@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" href="./img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png" type="image/x-icon">
   
+  <script src="models/sounds.class.js"></script>
   <script src="models/drawable-object.class.js"></script>
   <script src="models/movable-object.class.js"></script>
   <script src="models/throwable-object.class.js"></script>
@@ -36,11 +37,12 @@
   <div id="fullscreen">
     <div class="game-container">
       <canvas id="canvas" width="720" height="480"></canvas>
-
+      <button class="button-mute" onclick="muteGame()"><img src="./img_pollo_locco/img/lautsprecher-aus.png" alt="MUTE"></button>
       <div class="overlay" style="display: none;">
           <div class="panel-game">
             <div class="pannel-wrapper">
               <button onclick="restartGame()">RESTART</button>
+              <button onclick="muteGame()">MUTE</button>
               <button onclick="goToMenu()">X</button>
             </div>
           </div>
@@ -107,7 +109,7 @@
       </div>
     </div>
     <div id="landscapeScreen" class="landscapescreen" style="display: none;">
-      <h2>PLEASE ROTATE YOUR PHONE TO LANDSAPE MODE</h2>
+      <h2>PLEASE ROTATE YOUR PHONE/TABLET TO LANDSAPE MODE</h2>
       <img src="./img_pollo_locco/img/phone.png" alt="TURN PHONE">
     </div>
   </div>

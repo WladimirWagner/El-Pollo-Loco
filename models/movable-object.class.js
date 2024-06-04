@@ -23,6 +23,9 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
+      if (this.y > 130 && this instanceof Character) {
+        this.y = 130;
+      }
     }, 1000 / 25);
   } 
 
@@ -83,6 +86,14 @@ class MovableObject extends DrawableObject {
    */
   jump() {
     this.speedY = 25;
+  }
+
+  /**
+   * Objects jumps of chicken
+   *
+   */
+  jumpOfChicken() {
+    this.speedY = 20;
   }
 
   /**

@@ -2,7 +2,6 @@ class ThrowableObject extends MovableObject{
   width = 60;
   height = 50;
   isBroken = false;
-  throwing_sound = new Audio('audio/throw.mp3');
 
   IMAGES_BOTTLE_ROTATION = [
     'img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -44,7 +43,6 @@ bottleInterval;
    * Throws bottle.
    */
   throw() {
-    this.throwing_sound.play();
     this.speedY = 15;
     this.applyGravity();
     this.throwInterval = setInterval(() => {

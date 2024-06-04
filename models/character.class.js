@@ -12,9 +12,6 @@ class Character extends MovableObject {
     right: 40
   }
   lastMotion = Date.now();
-  walking_sound = new Audio('audio/walking.mp3');
-  jumping_sound = new Audio('audio/jump.mp3');
-  hurt_sound = new Audio('audio/hurt_sound.mp3');
 
   IMAGES_IDLE = [
     'img_pollo_locco/img/2_character_pepe/1_idle/idle/I-1.png',
@@ -81,6 +78,7 @@ class Character extends MovableObject {
 
   constructor() {
     super().loadImage('img_pollo_locco/img/2_character_pepe/2_walk/W-21.png');
+    this.audioManager = new AudioManager();
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_LONG_IDLE);
     this.loadImages(this.IMAGES_WALKING);
@@ -95,14 +93,14 @@ class Character extends MovableObject {
    */
   animate() {
     setInterval(() => {
-      this.walking_sound.pause();
+      this.audioManager.stopWalkingSound();
       this.characterMoving();
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
     setInterval(() => {
       this.characterAnimation();
-    }, 50);
+    }, 100);
   }
 
    /**
@@ -112,7 +110,7 @@ class Character extends MovableObject {
   characterAnimation() {
     if(this.isHurt()) {
       this.playAnimation(this.IMAGES_HURT);
-      this.hurt_sound.play();
+      this.audioManager.playHurtedSound();
     } else if(this.isDead()) {
       this.playAnimation(this.IMAGES_DEAD);
       openLoseScreen();
@@ -141,14 +139,22 @@ class Character extends MovableObject {
     }
   }
   
+   /**
+   * moving animations of character
+   * 
+   */
   pushLeft() {
     return this.world.keyboard.LEFT && this.x > -600;
   }
 
+  /**
+   * character is moving left
+   * 
+   */
   moveCharacterLeft() {
     this.moveLeft();
     this.otherDirection = true;
-    this.walking_sound.play();
+    this.audioManager.playWalkingSound();
     this.lastMotion = Date.now();
   }
 
@@ -156,13 +162,17 @@ class Character extends MovableObject {
     return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
   }
 
+  /**
+   * character is moving right
+   * distance limited to 1800px
+   */
   moveCharacterRigth() {
     if (this.x === 1800) {
       this.world.endbossAlert = true;
     }
     this.moveRigth();
     this.otherDirection = false;
-    this.walking_sound.play();
+    this.audioManager.playWalkingSound();
     this.lastMotion = Date.now();
   }
 
@@ -170,17 +180,20 @@ class Character extends MovableObject {
     return this.world.keyboard.SPACE && !this.isAboveGround(); 
   }
 
+  /**
+   * character is jumping
+   * 
+   */
   jump() {
     super.jump();
-    this.jumping_sound.play();
+    this.audioManager.playJumpingSound();
     this.lastMotion = Date.now();
   }
 
-  jumpOnChicken() {
-    this.speedY = 20;
-    this.lastMotion = Date.now();
-  }
-
+  /**
+   * character idle
+   * 
+   */
   idle() {
     if (Date.now() - this.lastMotion >= 10000) {
       this.playAnimation(this.IMAGES_LONG_IDLE);

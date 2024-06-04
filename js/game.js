@@ -1,7 +1,6 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-const elem = document.getElementById('fullscreen');
 
 let game_sound = new Audio('audio/pollo_loco_music.mp3');
 let win_sound = new Audio('audio/win_music.mp3');
@@ -225,24 +224,56 @@ function clearAllIntervals() {
 }
 
 /**
+ * Mutes the game
+ * 
+ */
+function muteGame() {
+  const muteButton = document.querySelector('.button-mute');
+  const img = muteButton.querySelector('img');
+
+  img.src = 'img_pollo_locco/img/lautsprecher.png';
+
+  game_sound.muted = true;
+  win_sound.muted = true;
+  lose_sound.muted = true;
+  world.audioManager.muteGameSounds();
+  world.character.audioManager.muteGameSounds();
+  world.endboss.audioManager.muteGameSounds();
+}
+
+/**
  * Checks the orientation of the display
- * If the width is under 729 px the user has to turn his phone
+ * If the width is under 1200px the user has to turn his phone
  */
 function checkOrientation() {
   const landscapeScreen = document.getElementById('landscapeScreen');
   const gameContainer = document.querySelector('.game-container');
   const overlay = document.querySelector('.overlay');
+  const muteBtn = document.querySelector('.button-mute');
 
   if (window.innerWidth < 950 && window.innerHeight < window.innerWidth) {
     landscapeScreen.style.display = 'none';
+    muteBtn.style.display = 'none';
     gameContainer.style.display = 'block';
     overlay.style.display = 'flex';
+  } else if (window.innerWidth < 1200 && window.innerHeight < window.innerWidth) {
+    landscapeScreen.style.display = 'none';
+    muteBtn.style.display = 'none';
+    gameContainer.style.display = 'block';
+    overlay.style.display = 'flex';
+  } else if (window.innerWidth < 1100 && window.innerHeight > window.innerWidth) {
+    landscapeScreen.style.display = 'flex';
+    muteBtn.style.display = 'none';
+    gameContainer.style.display = 'none';
+    overlay.style.display = 'none';
   } else if (window.innerWidth < 720 && window.innerHeight > window.innerWidth) {
     landscapeScreen.style.display = 'flex';
+    muteBtn.style.display = 'none';
     gameContainer.style.display = 'none';
     overlay.style.display = 'none';
   } else {
     landscapeScreen.style.display = 'none';
+    muteBtn.style.display = 'block';
     gameContainer.style.display = 'block';
     overlay.style.display = 'none';
   }
