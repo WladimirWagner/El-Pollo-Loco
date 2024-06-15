@@ -34,85 +34,85 @@
 
 <body>
   <h1>EL POLLO LOCO</h1>
-  <div id="fullscreen">
-    <div class="game-container">
-      <canvas id="canvas" width="720" height="480"></canvas>
-      <button class="button-mute" onclick="toggleMute()"><img src="./img_pollo_locco/img/lautsprecher-aus.png" alt="MUTE"></button>
 
-      <div class="overlay" style="display: none;">
-          <div class="panel-game">
-            <div class="pannel-wrapper">
-              <button onclick="restartGame()">RESTART</button>
-              <button id="muteBtn" onclick="toggleMute()">MUTE</button>
-              <button onclick="goToMenu()">X</button>
-            </div>
+  <div class="game-container">
+    <canvas id="canvas" width="720" height="480"></canvas>
+    <button class="button-mute" onclick="toggleMute()"><img src="./img_pollo_locco/img/lautsprecher-aus.png" alt="MUTE"></button>
+
+    <div class="overlay" style="display: none;">
+        <div class="panel-game">
+          <div class="pannel-wrapper">
+            <button onclick="restartGame()">RESTART</button>
+            <button id="muteBtn" onclick="toggleMute()">MUTE</button>
+            <button onclick="goToMenu()">X</button>
           </div>
+        </div>
 
-          <div class="panel-moving">
-            <div class="pannel-wrapper">
-              <button id="btnLeft">L</button>
-              <button id="btnRight">R</button>
-            </div>
-            <div class="pannel-wrapper">
-              <button id="btnJump">SPACE</button>
-              <button id="btnThrow">D</button>
-            </div>
+        <div class="panel-moving">
+          <div class="pannel-wrapper">
+            <button id="btnLeft"><img src="./img_pollo_locco/img/linker-pfeil.png" alt="RIGHT"></button>
+            <button id="btnRight"><img src="./img_pollo_locco/img/rechter-pfeil.png" alt="LEFT"></button>
           </div>
-      </div>
+          <div class="pannel-wrapper">
+            <button id="btnJump"><img src="./img_pollo_locco/keyboard/arrow_up.png" alt="SPACE"></button>
+            <button id="btnThrow"><img src="./img_pollo_locco/img/6_salsa_bottle/salsa_bottle.png" alt="SPACE"></button>
+          </div>
+        </div>
+    </div>
 
-      <div id="startScreen" class="startscreen">
+    <div id="startScreen" class="startscreen">
+      <a href="privacy_policy.html">Privacy Policy</a>
+      <a href="datenschutz.html">Datenschutzerklärung</a>
+      <button id="btnStartGame" class="button-start-game" onclick="startGame()">START</button>
+      <button id="btnControlls" class="button-instructions" onclick="openInstructions()">INSTRUCTIONS</button>
+    </div>
+
+    <div id="endScreenWin" class="endscreen" style="display: none;">
+      <div class="endscreen-link-container">
         <a href="privacy_policy.html">Privacy Policy</a>
         <a href="datenschutz.html">Datenschutzerklärung</a>
-        <button id="btnStartGame" class="button-start-game" onclick="startGame()">START</button>
-        <button id="btnControlls" class="button-instructions" onclick="openInstructions()">INSTRUCTIONS</button>
+      </div>
+      <div>
+        <img class="endscreen-img" src="./img_pollo_locco/img/9_intro_outro_screens/win/won_2.png" alt="WIN">
+      </div>
+      <div class="endscreen-button-container">
+        <button onclick="goToMenu()">BACK TO MENU</button>
+        <button onclick="restartGame()">RESTART</button>
       </div>
 
-      <div id="endScreenWin" class="endscreen" style="display: none;">
-        <div class="endscreen-link-container">
-          <a href="privacy_policy.html">Privacy Policy</a>
-          <a href="datenschutz.html">Datenschutzerklärung</a>
-        </div>
-        <div>
-          <img class="endscreen-img" src="./img_pollo_locco/img/9_intro_outro_screens/win/won_2.png" alt="WIN">
-        </div>
-        <div class="endscreen-button-container">
-          <button onclick="goToMenu()">BACK TO MENU</button>
-          <button onclick="restartGame()">RESTART</button>
-        </div>
+    </div>
 
+    <div id="endScreenLose" class="endscreen" style="display: none;">
+      <div class="endscreen-link-container">
+        <a href="privacy_policy.html">Privacy Policy</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
       </div>
-
-      <div id="endScreenLose" class="endscreen" style="display: none;">
-        <div class="endscreen-link-container">
-          <a href="privacy_policy.html">Privacy Policy</a>
-          <a href="datenschutz.html">Datenschutzerklärung</a>
-        </div>
-        <div>
-          <img class="endscreen-img" src="./img_pollo_locco/img/9_intro_outro_screens/game_over/game over!.png" alt="LOSE">
-        </div>
-        <div class="endscreen-button-container">
-          <button onclick="goToMenu()">BACK TO MENU</button>
-          <button onclick="restartGame()">RESTART</button>
-        </div>
+      <div>
+        <img class="endscreen-img" src="./img_pollo_locco/img/9_intro_outro_screens/game_over/game over!.png" alt="LOSE">
       </div>
-
-      <div id="instructions" class="endscreen instructions" style="display: none;">
-        <button onclick="closeInstructions()" style="margin-top: 8px;">CLOSE</button>
-        <div>
-          <ul>
-            <li>PRESS RIGHT = RUN RIGHT</li>
-            <li>PRESS LEFT = RUN LEFT</li>
-            <li>PRESS SPACE = JUMP</li>
-            <li>PRESS D = THROW BOTTLE</li>
-          </ul>
-          <p>YOU NEED TO DEFEAT THE POLLO LOCO! <br>PICK UP SOME SALSA BOTTLES AND THROW THEM ON HIM. <br>BUT PREPARE TO BE ATTACKED BY HIS LITTLE FRIENDS!</p>
-        </div>
+      <div class="endscreen-button-container">
+        <button onclick="goToMenu()">BACK TO MENU</button>
+        <button onclick="restartGame()">RESTART</button>
       </div>
     </div>
-    <div id="landscapeScreen" class="landscapescreen" style="display: none;">
-      <h2>PLEASE ROTATE YOUR PHONE/TABLET TO LANDSAPE MODE</h2>
-      <img src="./img_pollo_locco/img/phone.png" alt="TURN PHONE">
+
+    <div id="instructions" class="endscreen instructions" style="display: none;">
+      <button onclick="closeInstructions()" style="margin-top: 8px;">CLOSE</button>
+      <div>
+        <ul>
+          <li><img src="./img_pollo_locco/img/linker-pfeil.png" alt="RIGHT"> RUN RIGHT</li>
+          <li><img src="./img_pollo_locco/img/rechter-pfeil.png" alt="LEFT"> PRESS LEFT = RUN LEFT</li>
+          <li><img src="./img_pollo_locco/keyboard/spacebar.png" alt="SPACE"> PRESS SPACE = JUMP</li>
+          <li><img src="./img_pollo_locco/keyboard/d.png" alt="D"> PRESS D = THROW BOTTLE</li>
+        </ul>
+        <p>YOU NEED TO DEFEAT THE POLLO LOCO! <br>PICK UP SOME SALSA BOTTLES AND THROW THEM ON HIM. <br>BUT PREPARE TO BE ATTACKED BY HIS LITTLE FRIENDS!</p>
+      </div>
     </div>
   </div>
+  <div id="landscapeScreen" class="landscapescreen" style="display: none;">
+    <h2>PLEASE ROTATE YOUR PHONE/TABLET TO LANDSAPE MODE</h2>
+    <img src="./img_pollo_locco/img/phone.png" alt="TURN PHONE">
+  </div>
+
 </body>
 </html>

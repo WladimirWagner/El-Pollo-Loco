@@ -41,6 +41,16 @@ ul {
   list-style-type: none;
 }
 
+li {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+li img {
+  height: 30px;
+}
+
 .game-container {
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -96,12 +106,19 @@ canvas {
   border: 1px solid #FFDE01;
   padding: 8px 16px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-moving button img {
+  height: 20px;
 }
 
 .pannel-wrapper {
   display: flex;
-  gap: 16px;
-  padding: 10px;
+  gap: 24px;
+  padding: 16px;
 }
 
 .landscapescreen {

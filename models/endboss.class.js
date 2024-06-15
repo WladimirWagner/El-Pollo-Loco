@@ -116,7 +116,7 @@ class Endboss extends MovableObject {
   endbossIsHurt() {
     this.audioManager.stopEndbossAlertSound();
     this.audioManager.playEndbossSound();
-    this.speed = 5;
+    this.speed = 15;
     this.moveLeft();
     this.playAnimation(this.IMAGES_HURT);
   }
@@ -127,7 +127,7 @@ class Endboss extends MovableObject {
    */
   endbossAttacks() {
     this.audioManager.stopEndbossAlertSound();
-    this.speed = 10;
+    this.speed = 25;
     this.moveLeft();
     this.playAnimation(this.IMAGES_ATTACK);
   }
